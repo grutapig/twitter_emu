@@ -1,0 +1,1362 @@
+[
+  {
+    "model": "twitterapi.community",
+    "pk": 1,
+    "fields": {
+      "twitter_id": "1234567890123456789",
+      "name": "DogeSquad",
+      "created_at": "2024-09-15T10:00:00Z",
+      "updated_at": "2024-09-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.community",
+    "pk": 2,
+    "fields": {
+      "twitter_id": "9876543210987654321",
+      "name": "KittyCoin",
+      "created_at": "2024-09-15T11:00:00Z",
+      "updated_at": "2024-09-15T11:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 1,
+    "fields": {
+      "username": "doge_founder",
+      "screen_name": "doge_founder",
+      "name": "Doge Founder",
+      "twitter_id": "1111111111111111111",
+      "email": "doge@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-10T09:00:00Z",
+      "created_at": "2024-09-10T09:00:00Z",
+      "updated_at": "2024-09-10T09:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 2,
+    "fields": {
+      "username": "kitty_creator",
+      "screen_name": "kitty_creator",
+      "name": "Kitty Creator",
+      "twitter_id": "2222222222222222222",
+      "email": "kitty@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-10T10:00:00Z",
+      "created_at": "2024-09-10T10:00:00Z",
+      "updated_at": "2024-09-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 3,
+    "fields": {
+      "username": "moon_believer",
+      "screen_name": "moon_believer",
+      "name": "Moon Believer",
+      "twitter_id": "3333333333333333333",
+      "email": "moon@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-11T08:00:00Z",
+      "created_at": "2024-09-11T08:00:00Z",
+      "updated_at": "2024-09-11T08:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 4,
+    "fields": {
+      "username": "bear_market_bob",
+      "screen_name": "bear_market_bob",
+      "name": "Bear Market Bob",
+      "twitter_id": "4444444444444444444",
+      "email": "bear@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-11T09:00:00Z",
+      "created_at": "2024-09-11T09:00:00Z",
+      "updated_at": "2024-09-11T09:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 5,
+    "fields": {
+      "username": "diamond_hands",
+      "screen_name": "diamond_hands",
+      "name": "Diamond Hands",
+      "twitter_id": "5555555555555555555",
+      "email": "diamond@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-12T07:00:00Z",
+      "created_at": "2024-09-12T07:00:00Z",
+      "updated_at": "2024-09-12T07:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 6,
+    "fields": {
+      "username": "paper_hands_pete",
+      "screen_name": "paper_hands_pete",
+      "name": "Paper Hands Pete",
+      "twitter_id": "6666666666666666666",
+      "email": "paper@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-12T08:00:00Z",
+      "created_at": "2024-09-12T08:00:00Z",
+      "updated_at": "2024-09-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 7,
+    "fields": {
+      "username": "crypto_analyst",
+      "screen_name": "crypto_analyst",
+      "name": "Crypto Analyst",
+      "twitter_id": "7777777777777777777",
+      "email": "analyst@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-13T06:00:00Z",
+      "created_at": "2024-09-13T06:00:00Z",
+      "updated_at": "2024-09-13T06:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 8,
+    "fields": {
+      "username": "whale_watcher",
+      "screen_name": "whale_watcher",
+      "name": "Whale Watcher",
+      "twitter_id": "8888888888888888888",
+      "email": "whale@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-13T07:00:00Z",
+      "created_at": "2024-09-13T07:00:00Z",
+      "updated_at": "2024-09-13T07:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 9,
+    "fields": {
+      "username": "hodl_queen",
+      "screen_name": "hodl_queen",
+      "name": "HODL Queen",
+      "twitter_id": "9999999999999999999",
+      "email": "hodl@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-14T05:00:00Z",
+      "created_at": "2024-09-14T05:00:00Z",
+      "updated_at": "2024-09-14T05:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.user",
+    "pk": 10,
+    "fields": {
+      "username": "fud_spreader",
+      "screen_name": "fud_spreader",
+      "name": "FUD Spreader",
+      "twitter_id": "1010101010101010101",
+      "email": "fud@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2024-09-14T06:00:00Z",
+      "created_at": "2024-09-14T06:00:00Z",
+      "updated_at": "2024-09-14T06:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 1,
+    "fields": {
+      "twitter_id": "1001001001001001001",
+      "text": "DogeSquad tokenomics looking solid. 5% burn, 3% reflection. HODL! 💎",
+      "author": 1,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-10-01T12:00:00Z",
+      "updated_at": "2024-10-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 2,
+    "fields": {
+      "twitter_id": "1001001001001001002",
+      "text": "Early days but community is growing fast! 🚀",
+      "author": 3,
+      "community": 1,
+      "reply_to": 1,
+      "created_at": "2024-10-01T12:30:00Z",
+      "updated_at": "2024-10-01T12:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 3,
+    "fields": {
+      "twitter_id": "1001001001001001003",
+      "text": "KittyCoin development update: Smart contract audit complete! ✅🐱",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-10-03T14:00:00Z",
+      "updated_at": "2024-10-03T14:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 4,
+    "fields": {
+      "twitter_id": "1001001001001001004",
+      "text": "Nice! Security first approach 👍",
+      "author": 7,
+      "community": 2,
+      "reply_to": 3,
+      "created_at": "2024-10-03T14:15:00Z",
+      "updated_at": "2024-10-03T14:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 5,
+    "fields": {
+      "twitter_id": "1001001001001001005",
+      "text": "DogeSquad partnerships expanding. More announcements coming soon! 🤝",
+      "author": 1,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-10-08T16:00:00Z",
+      "updated_at": "2024-10-08T16:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 6,
+    "fields": {
+      "twitter_id": "1001001001001001006",
+      "text": "KittyCoin NFT marketplace beta testing begins next week 🎨😸",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-10-12T11:00:00Z",
+      "updated_at": "2024-10-12T11:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 7,
+    "fields": {
+      "twitter_id": "1001001001001001007",
+      "text": "Excited to test! When will public launch be?",
+      "author": 3,
+      "community": 2,
+      "reply_to": 6,
+      "created_at": "2024-10-12T11:30:00Z",
+      "updated_at": "2024-10-12T11:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 8,
+    "fields": {
+      "twitter_id": "1001001001001001008",
+      "text": "DogeSquad holders now get staking rewards! 15% APY 📈",
+      "author": 1,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-10-18T13:00:00Z",
+      "updated_at": "2024-10-18T13:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 9,
+    "fields": {
+      "twitter_id": "1001001001001001009",
+      "text": "Finally! Been waiting for staking 💎🙌",
+      "author": 5,
+      "community": 1,
+      "reply_to": 8,
+      "created_at": "2024-10-18T13:15:00Z",
+      "updated_at": "2024-10-18T13:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 10,
+    "fields": {
+      "twitter_id": "1001001001001001010",
+      "text": "15% seems high. Sustainable? 🤔",
+      "author": 4,
+      "community": 1,
+      "reply_to": 8,
+      "created_at": "2024-10-18T13:45:00Z",
+      "updated_at": "2024-10-18T13:45:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 11,
+    "fields": {
+      "twitter_id": "1001001001001001011",
+      "text": "KittyCoin charity wallet donated $5K to animal shelters! ❤️🐾",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-10-25T15:00:00Z",
+      "updated_at": "2024-10-25T15:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 12,
+    "fields": {
+      "twitter_id": "1001001001001001012",
+      "text": "This is why I'm bullish long term. Real impact! 🙌",
+      "author": 9,
+      "community": 2,
+      "reply_to": 11,
+      "created_at": "2024-10-25T15:30:00Z",
+      "updated_at": "2024-10-25T15:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 13,
+    "fields": {
+      "twitter_id": "1001001001001001013",
+      "text": "DogeSquad technical analysis: Cup and handle forming 📊",
+      "author": 7,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-11-02T10:00:00Z",
+      "updated_at": "2024-11-02T10:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 14,
+    "fields": {
+      "twitter_id": "1001001001001001014",
+      "text": "Target price if breakout?",
+      "author": 3,
+      "community": 1,
+      "reply_to": 13,
+      "created_at": "2024-11-02T10:15:00Z",
+      "updated_at": "2024-11-02T10:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 15,
+    "fields": {
+      "twitter_id": "1001001001001001015",
+      "text": "KittyCoin mobile app development progressing well 📱",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-11-08T12:00:00Z",
+      "updated_at": "2024-11-08T12:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 16,
+    "fields": {
+      "twitter_id": "1001001001001001016",
+      "text": "DogeSquad community hit 50K members! 🎉",
+      "author": 9,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-11-15T14:00:00Z",
+      "updated_at": "2024-11-15T14:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 17,
+    "fields": {
+      "twitter_id": "1001001001001001017",
+      "text": "KittyCoin partnerships with pet stores announced! 🏪🐱",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-11-22T16:00:00Z",
+      "updated_at": "2024-11-22T16:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 18,
+    "fields": {
+      "twitter_id": "1001001001001001018",
+      "text": "Real world utility! Which stores?",
+      "author": 8,
+      "community": 2,
+      "reply_to": 17,
+      "created_at": "2024-11-22T16:20:00Z",
+      "updated_at": "2024-11-22T16:20:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 19,
+    "fields": {
+      "twitter_id": "1001001001001001019",
+      "text": "DogeSquad whale alert! 🐋 Large accumulation happening",
+      "author": 8,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-12-01T18:00:00Z",
+      "updated_at": "2024-12-01T18:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 20,
+    "fields": {
+      "twitter_id": "1001001001001001020",
+      "text": "Smart money knows something we don't? 👀",
+      "author": 7,
+      "community": 1,
+      "reply_to": 19,
+      "created_at": "2024-12-01T18:15:00Z",
+      "updated_at": "2024-12-01T18:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 21,
+    "fields": {
+      "twitter_id": "2001001001001001001",
+      "text": "🚨 KittyCoin EMERGENCY: Major exploit discovered in our smart contract. Trading paused until further notice. Team is working on fix.",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-12-20T13:00:00Z",
+      "updated_at": "2024-12-20T13:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 22,
+    "fields": {
+      "twitter_id": "2001001001001001002",
+      "text": "How bad is it? Are funds safe?? 😰",
+      "author": 6,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:02:00Z",
+      "updated_at": "2024-12-20T13:02:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 23,
+    "fields": {
+      "twitter_id": "2001001001001001003",
+      "text": "I TOLD YOU SO! Another rug pull in disguise. Glad I sold yesterday",
+      "author": 10,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:05:00Z",
+      "updated_at": "2024-12-20T13:05:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 24,
+    "fields": {
+      "twitter_id": "2001001001001001004",
+      "text": "@fud_spreader This isn't a rug pull! It's a white hat discovery. Team is being transparent unlike most projects",
+      "author": 5,
+      "community": 2,
+      "reply_to": 23,
+      "created_at": "2024-12-20T13:08:00Z",
+      "updated_at": "2024-12-20T13:08:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 25,
+    "fields": {
+      "twitter_id": "2001001001001001005",
+      "text": "What's the timeline for the fix? Need to know if I should panic sell or hold",
+      "author": 3,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:10:00Z",
+      "updated_at": "2024-12-20T13:10:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 26,
+    "fields": {
+      "twitter_id": "2001001001001001006",
+      "text": "@moon_believer Patch will be deployed within 24 hours. Third party audit already confirmed. No funds are at risk!",
+      "author": 2,
+      "community": 2,
+      "reply_to": 25,
+      "created_at": "2024-12-20T13:15:00Z",
+      "updated_at": "2024-12-20T13:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 27,
+    "fields": {
+      "twitter_id": "2001001001001001007",
+      "text": "Good thing the exploit was found before any actual damage. Shows the team cares about security",
+      "author": 7,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:18:00Z",
+      "updated_at": "2024-12-20T13:18:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 28,
+    "fields": {
+      "twitter_id": "2001001001001001008",
+      "text": "Buying the dip! This kind of transparency actually makes me more bullish long term 📈",
+      "author": 9,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:20:00Z",
+      "updated_at": "2024-12-20T13:20:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 29,
+    "fields": {
+      "twitter_id": "2001001001001001009",
+      "text": "Price already recovering. Market realizes this is actually good news - proactive security measures",
+      "author": 8,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:25:00Z",
+      "updated_at": "2024-12-20T13:25:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 30,
+    "fields": {
+      "twitter_id": "2001001001001001010",
+      "text": "Will there be compensation for holders affected by the price drop?",
+      "author": 6,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:28:00Z",
+      "updated_at": "2024-12-20T13:28:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 31,
+    "fields": {
+      "twitter_id": "2001001001001001011",
+      "text": "@paper_hands_pete No compensation needed - no actual exploit occurred. Just precautionary measures",
+      "author": 2,
+      "community": 2,
+      "reply_to": 30,
+      "created_at": "2024-12-20T13:30:00Z",
+      "updated_at": "2024-12-20T13:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 32,
+    "fields": {
+      "twitter_id": "2001001001001001012",
+      "text": "Smart contracts are hard. At least they caught it early. Respect for the transparency 👏",
+      "author": 4,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:35:00Z",
+      "updated_at": "2024-12-20T13:35:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 33,
+    "fields": {
+      "twitter_id": "2001001001001001013",
+      "text": "This is why you only invest what you can afford to lose. Crypto is wild! 🎢",
+      "author": 3,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:40:00Z",
+      "updated_at": "2024-12-20T13:40:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 34,
+    "fields": {
+      "twitter_id": "2001001001001001014",
+      "text": "When trading resumes, expect massive volatility. Set your stop losses appropriately ⚠️",
+      "author": 7,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:45:00Z",
+      "updated_at": "2024-12-20T13:45:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 35,
+    "fields": {
+      "twitter_id": "2001001001001001015",
+      "text": "Community is staying strong through this. That's what matters most! 💪😸",
+      "author": 9,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T13:50:00Z",
+      "updated_at": "2024-12-20T13:50:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 36,
+    "fields": {
+      "twitter_id": "2001001001001001016",
+      "text": "Update: Patch deployed successfully! Trading will resume in 2 hours. Thanks for your patience! 🎉",
+      "author": 2,
+      "community": 2,
+      "reply_to": 21,
+      "created_at": "2024-12-20T15:00:00Z",
+      "updated_at": "2024-12-20T15:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 37,
+    "fields": {
+      "twitter_id": "2001001001001001017",
+      "text": "LFG! Time to buy back in! 🚀",
+      "author": 6,
+      "community": 2,
+      "reply_to": 36,
+      "created_at": "2024-12-20T15:02:00Z",
+      "updated_at": "2024-12-20T15:02:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 38,
+    "fields": {
+      "twitter_id": "2001001001001001018",
+      "text": "Told you it would be fine! Diamond hands prevail again 💎🙌",
+      "author": 5,
+      "community": 2,
+      "reply_to": 36,
+      "created_at": "2024-12-20T15:05:00Z",
+      "updated_at": "2024-12-20T15:05:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 39,
+    "fields": {
+      "twitter_id": "1001001001001001021",
+      "text": "🚀 MAJOR ANNOUNCEMENT: DogeSquad partnership with Binance confirmed! Trading starts Monday. This is what we've been working towards for months! #DogeSquad #ToTheMoon",
+      "author": 1,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-12-21T12:00:00Z",
+      "updated_at": "2024-12-21T12:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 40,
+    "fields": {
+      "twitter_id": "1001001001001001022",
+      "text": "Finally! Been waiting for this since day one. LFG! 🚀🚀🚀",
+      "author": 3,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:02:00Z",
+      "updated_at": "2024-12-21T12:02:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 41,
+    "fields": {
+      "twitter_id": "1001001001001001023",
+      "text": "Congrats team! This is huge for mainstream adoption 🎉",
+      "author": 9,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:05:00Z",
+      "updated_at": "2024-12-21T12:05:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 42,
+    "fields": {
+      "twitter_id": "1001001001001001024",
+      "text": "About time! DogeSquad deserves this recognition. Diamond hands paying off! 💎🙌",
+      "author": 5,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:08:00Z",
+      "updated_at": "2024-12-21T12:08:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 43,
+    "fields": {
+      "twitter_id": "1001001001001001025",
+      "text": "Great news but I'm curious about the trading pairs. Will it be DOGE/USDT and DOGE/BTC?",
+      "author": 7,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:10:00Z",
+      "updated_at": "2024-12-21T12:10:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 44,
+    "fields": {
+      "twitter_id": "1001001001001001026",
+      "text": "@crypto_analyst Yes! DOGE/USDT, DOGE/BTC, and DOGE/BNB pairs confirmed. Full liquidity support!",
+      "author": 1,
+      "community": 1,
+      "reply_to": 43,
+      "created_at": "2024-12-21T12:12:00Z",
+      "updated_at": "2024-12-21T12:12:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 45,
+    "fields": {
+      "twitter_id": "1001001001001001027",
+      "text": "This is exactly what we needed. Binance listing = legitimacy in the eyes of institutional investors",
+      "author": 8,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:15:00Z",
+      "updated_at": "2024-12-21T12:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 46,
+    "fields": {
+      "twitter_id": "1001001001001001028",
+      "text": "Still skeptical. How many \"partnerships\" turn out to be nothing? Seen this before with other coins",
+      "author": 4,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:18:00Z",
+      "updated_at": "2024-12-21T12:18:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 47,
+    "fields": {
+      "twitter_id": "1001001001001001029",
+      "text": "@bear_market_bob Fair point but this is Binance official announcement, not just rumors. Check their Twitter!",
+      "author": 3,
+      "community": 1,
+      "reply_to": 46,
+      "created_at": "2024-12-21T12:20:00Z",
+      "updated_at": "2024-12-21T12:20:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 48,
+    "fields": {
+      "twitter_id": "1001001001001001030",
+      "text": "Price prediction after listing? I'm thinking 300% minimum 📈",
+      "author": 3,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:25:00Z",
+      "updated_at": "2024-12-21T12:25:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 49,
+    "fields": {
+      "twitter_id": "1001001001001001031",
+      "text": "Let's be realistic. 50-100% is more likely. Still amazing gains though!",
+      "author": 7,
+      "community": 1,
+      "reply_to": 48,
+      "created_at": "2024-12-21T12:28:00Z",
+      "updated_at": "2024-12-21T12:28:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 50,
+    "fields": {
+      "twitter_id": "1001001001001001032",
+      "text": "Does this mean we'll finally get that mobile app update too?",
+      "author": 9,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:30:00Z",
+      "updated_at": "2024-12-21T12:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 51,
+    "fields": {
+      "twitter_id": "1001001001001001033",
+      "text": "@hodl_queen Mobile app 2.0 releases same day as Binance listing! Perfect timing 📱",
+      "author": 1,
+      "community": 1,
+      "reply_to": 50,
+      "created_at": "2024-12-21T12:32:00Z",
+      "updated_at": "2024-12-21T12:32:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 52,
+    "fields": {
+      "twitter_id": "1001001001001001034",
+      "text": "Buying more before Monday. This is life changing money! 💰",
+      "author": 6,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:35:00Z",
+      "updated_at": "2024-12-21T12:35:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 53,
+    "fields": {
+      "twitter_id": "1001001001001001035",
+      "text": "Don't FOMO in. Market could still dump before the actual listing",
+      "author": 4,
+      "community": 1,
+      "reply_to": 52,
+      "created_at": "2024-12-21T12:38:00Z",
+      "updated_at": "2024-12-21T12:38:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 54,
+    "fields": {
+      "twitter_id": "1001001001001001036",
+      "text": "Team has been transparent from day one. This is the result of consistent hard work 🔥",
+      "author": 5,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:40:00Z",
+      "updated_at": "2024-12-21T12:40:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 55,
+    "fields": {
+      "twitter_id": "1001001001001001037",
+      "text": "Volume is already picking up. Smart money is accumulating 👀",
+      "author": 8,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:45:00Z",
+      "updated_at": "2024-12-21T12:45:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 56,
+    "fields": {
+      "twitter_id": "1001001001001001038",
+      "text": "International exposure will be huge. Asian markets love dog coins! 🐕🌏",
+      "author": 3,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:48:00Z",
+      "updated_at": "2024-12-21T12:48:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 57,
+    "fields": {
+      "twitter_id": "1001001001001001039",
+      "text": "Congrats to everyone who held through the bear market. This is our reward! 🎊",
+      "author": 9,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:50:00Z",
+      "updated_at": "2024-12-21T12:50:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 58,
+    "fields": {
+      "twitter_id": "1001001001001001040",
+      "text": "Next stop: Coinbase! 🚀",
+      "author": 5,
+      "community": 1,
+      "reply_to": 39,
+      "created_at": "2024-12-21T12:55:00Z",
+      "updated_at": "2024-12-21T12:55:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 59,
+    "fields": {
+      "twitter_id": "2001001001001001019",
+      "text": "🐱 KittyCoin purring its way to the moon! New partnerships with 3 major pet stores announced. Real world utility = real value! #KittyCoin #CryptoKitties",
+      "author": 2,
+      "community": 2,
+      "reply_to": null,
+      "created_at": "2024-12-22T13:00:00Z",
+      "updated_at": "2024-12-22T13:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 60,
+    "fields": {
+      "twitter_id": "2001001001001001020",
+      "text": "Which stores exactly? This is huge news! 🏪😸",
+      "author": 3,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:05:00Z",
+      "updated_at": "2024-12-22T13:05:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 61,
+    "fields": {
+      "twitter_id": "2001001001001001021",
+      "text": "PetSmart, Petco, and Pet Supplies Plus! Full rollout Q1 2025 🎉",
+      "author": 2,
+      "community": 2,
+      "reply_to": 60,
+      "created_at": "2024-12-22T13:08:00Z",
+      "updated_at": "2024-12-22T13:08:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 62,
+    "fields": {
+      "twitter_id": "2001001001001001022",
+      "text": "Finally some real utility! Not just another meme coin 💪",
+      "author": 5,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:10:00Z",
+      "updated_at": "2024-12-22T13:10:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 63,
+    "fields": {
+      "twitter_id": "2001001001001001023",
+      "text": "This changes everything. Real world adoption is starting! 🌍",
+      "author": 8,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:15:00Z",
+      "updated_at": "2024-12-22T13:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 64,
+    "fields": {
+      "twitter_id": "2001001001001001024",
+      "text": "Market cap still undervalued considering these partnerships 📈",
+      "author": 7,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:18:00Z",
+      "updated_at": "2024-12-22T13:18:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 65,
+    "fields": {
+      "twitter_id": "2001001001001001025",
+      "text": "Skeptical about execution. Many partnerships fail at implementation stage",
+      "author": 4,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:20:00Z",
+      "updated_at": "2024-12-22T13:20:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 66,
+    "fields": {
+      "twitter_id": "2001001001001001026",
+      "text": "@bear_market_bob Fair concern but we have signed contracts and legal teams involved. This is official! 📋",
+      "author": 2,
+      "community": 2,
+      "reply_to": 65,
+      "created_at": "2024-12-22T13:25:00Z",
+      "updated_at": "2024-12-22T13:25:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 67,
+    "fields": {
+      "twitter_id": "2001001001001001027",
+      "text": "Loading up more bags before this goes mainstream 🛒💎",
+      "author": 6,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:28:00Z",
+      "updated_at": "2024-12-22T13:28:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 68,
+    "fields": {
+      "twitter_id": "2001001001001001028",
+      "text": "Community building paid off! We've been working towards this for months 🤝",
+      "author": 9,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:30:00Z",
+      "updated_at": "2024-12-22T13:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 69,
+    "fields": {
+      "twitter_id": "2001001001001001029",
+      "text": "Will there be special discounts for KittyCoin holders?",
+      "author": 3,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:35:00Z",
+      "updated_at": "2024-12-22T13:35:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 70,
+    "fields": {
+      "twitter_id": "2001001001001001030",
+      "text": "@moon_believer Yes! 10% discount for holders, 15% for stakers! Plus loyalty rewards program 🎁",
+      "author": 2,
+      "community": 2,
+      "reply_to": 69,
+      "created_at": "2024-12-22T13:38:00Z",
+      "updated_at": "2024-12-22T13:38:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 71,
+    "fields": {
+      "twitter_id": "2001001001001001031",
+      "text": "This is why I never sold during the exploit FUD. Diamond hands! 💎🙌",
+      "author": 5,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:40:00Z",
+      "updated_at": "2024-12-22T13:40:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 72,
+    "fields": {
+      "twitter_id": "2001001001001001032",
+      "text": "Price target after partnerships go live? I'm thinking $1 minimum 🎯",
+      "author": 3,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:45:00Z",
+      "updated_at": "2024-12-22T13:45:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 73,
+    "fields": {
+      "twitter_id": "2001001001001001033",
+      "text": "Conservative estimate $0.50-0.75. Still 10x from here! 🚀",
+      "author": 7,
+      "community": 2,
+      "reply_to": 72,
+      "created_at": "2024-12-22T13:48:00Z",
+      "updated_at": "2024-12-22T13:48:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 74,
+    "fields": {
+      "twitter_id": "2001001001001001034",
+      "text": "Best crypto investment I've made this year. Team delivers! 🏆",
+      "author": 9,
+      "community": 2,
+      "reply_to": 59,
+      "created_at": "2024-12-22T13:50:00Z",
+      "updated_at": "2024-12-22T13:50:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 75,
+    "fields": {
+      "twitter_id": "1001001001001001041",
+      "text": "DogeSquad just hit 100K holders! 🎉 Community growth is absolutely insane. We're building something special here! #DogeSquadArmy",
+      "author": 1,
+      "community": 1,
+      "reply_to": null,
+      "created_at": "2024-12-23T15:00:00Z",
+      "updated_at": "2024-12-23T15:00:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 76,
+    "fields": {
+      "twitter_id": "1001001001001001042",
+      "text": "From 1K to 100K in 3 months! This is legendary growth 🚀📈",
+      "author": 3,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:02:00Z",
+      "updated_at": "2024-12-23T15:02:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 77,
+    "fields": {
+      "twitter_id": "1001001001001001043",
+      "text": "Been here since 500 holders. Feels surreal! 🥲💎",
+      "author": 5,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:05:00Z",
+      "updated_at": "2024-12-23T15:05:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 78,
+    "fields": {
+      "twitter_id": "1001001001001001044",
+      "text": "Quality over quantity though. Are these real holders or just speculators?",
+      "author": 7,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:08:00Z",
+      "updated_at": "2024-12-23T15:08:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 79,
+    "fields": {
+      "twitter_id": "1001001001001001045",
+      "text": "@crypto_analyst Mix of both but avg hold time is 45 days. Shows conviction! 📊",
+      "author": 1,
+      "community": 1,
+      "reply_to": 78,
+      "created_at": "2024-12-23T15:10:00Z",
+      "updated_at": "2024-12-23T15:10:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 80,
+    "fields": {
+      "twitter_id": "1001001001001001046",
+      "text": "Most holders are in it for the tech and community, not just quick gains 💪",
+      "author": 9,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:12:00Z",
+      "updated_at": "2024-12-23T15:12:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 81,
+    "fields": {
+      "twitter_id": "1001001001001001047",
+      "text": "Numbers look inflated to me. Seen this pattern before with other coins 📉",
+      "author": 4,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:15:00Z",
+      "updated_at": "2024-12-23T15:15:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 82,
+    "fields": {
+      "twitter_id": "1001001001001001048",
+      "text": "@bear_market_bob You can verify on-chain. Every holder is real and traceable 🔍",
+      "author": 8,
+      "community": 1,
+      "reply_to": 81,
+      "created_at": "2024-12-23T15:18:00Z",
+      "updated_at": "2024-12-23T15:18:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 83,
+    "fields": {
+      "twitter_id": "1001001001001001049",
+      "text": "What's the plan to keep growing? 200K next milestone? 🎯",
+      "author": 6,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:20:00Z",
+      "updated_at": "2024-12-23T15:20:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 84,
+    "fields": {
+      "twitter_id": "1001001001001001050",
+      "text": "@paper_hands_pete Binance listing should bring another 50K easily. Then marketing push for 250K 📈",
+      "author": 1,
+      "community": 1,
+      "reply_to": 83,
+      "created_at": "2024-12-23T15:25:00Z",
+      "updated_at": "2024-12-23T15:25:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 85,
+    "fields": {
+      "twitter_id": "1001001001001001051",
+      "text": "Community strength is what sets DogeSquad apart. We're family! 👨‍👩‍👧‍👦🐕",
+      "author": 9,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:28:00Z",
+      "updated_at": "2024-12-23T15:28:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 86,
+    "fields": {
+      "twitter_id": "1001001001001001052",
+      "text": "Big whale wallets or lots of small holders? Distribution matters 🐋",
+      "author": 8,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:30:00Z",
+      "updated_at": "2024-12-23T15:30:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 87,
+    "fields": {
+      "twitter_id": "1001001001001001053",
+      "text": "@whale_watcher Top 10 wallets hold only 15% of supply. Very healthy distribution! 📊✅",
+      "author": 1,
+      "community": 1,
+      "reply_to": 86,
+      "created_at": "2024-12-23T15:35:00Z",
+      "updated_at": "2024-12-23T15:35:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 88,
+    "fields": {
+      "twitter_id": "1001001001001001054",
+      "text": "Proud to be holder #247! Early adopter gang 🏆",
+      "author": 5,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:38:00Z",
+      "updated_at": "2024-12-23T15:38:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 89,
+    "fields": {
+      "twitter_id": "1001001001001001055",
+      "text": "This milestone deserves celebration! When lambo? 🏎️😂",
+      "author": 3,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:40:00Z",
+      "updated_at": "2024-12-23T15:40:00Z"
+    }
+  },
+  {
+    "model": "twitterapi.tweet",
+    "pk": 90,
+    "fields": {
+      "twitter_id": "1001001001001001056",
+      "text": "Next stop: 1 million holders! We're just getting started 🌟",
+      "author": 9,
+      "community": 1,
+      "reply_to": 75,
+      "created_at": "2024-12-23T15:45:00Z",
+      "updated_at": "2024-12-23T15:45:00Z"
+    }
+  }
+]
