@@ -1,0 +1,4 @@
+.idea
+venv
+db.sqlite3
+db_backup.sqlite3
