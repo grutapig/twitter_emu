@@ -1,0 +1,737 @@
+{% extends 'ui_vue/base.html' %}
+
+{% block title %}Tweet - Twitter Emulator{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="header-card">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center">
+            <button class="back-btn me-3" @click="goBack">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div>
+                <h1 class="h3 mb-1 fw-bold text-primary">
+                    <i class="bi bi-chat-square-text me-2"></i>Post
+                </h1>
+                <p class="text-muted mb-0">View post and replies</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div v-if="loading && !tweet" class="content-card">
+    <div class="card-body text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mb-0">Loading post...</p>
+    </div>
+</div>
+
+<!-- Error State -->
+<div v-if="error" class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <span v-text="error"></span>
+</div>
+
+<!-- Main Tweet -->
+<div v-if="!loading && !error && tweet" class="content-card mb-4">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex">
+                <div class="author-avatar me-3">
+                    <span v-text="tweet.author.name.charAt(0).toUpperCase()"></span>
+                </div>
+                <div>
+                    <h5 class="mb-1 fw-bold">
+                        <a :href="`/user/${tweet.author.id}/`" 
+                           class="text-decoration-none text-dark author-link"
+                           v-text="tweet.author.name"></a>
+                    </h5>
+                    <small class="text-muted">
+                        @<a :href="`/user/${tweet.author.id}/`" 
+                             class="text-decoration-none text-muted author-link"><span v-text="tweet.author.screen_name"></span></a>
+                    </small>
+                </div>
+            </div>
+            <button class="delete-btn" @click="deleteTweet(tweet.id)" title="Delete tweet">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+        
+        <p class="fs-5 mb-3" v-text="tweet.text"></p>
+        
+        <div class="d-flex align-items-center gap-3 mb-3 text-muted">
+            <small v-text="formatFullDate(tweet.created_at)"></small>
+            <span v-if="tweet.community" class="badge bg-primary">
+                <span v-text="tweet.community.name"></span>
+            </span>
+        </div>
+        
+        <div class="tweet-stats mb-3">
+            <div class="d-flex gap-4">
+                <div>
+                    <span class="fw-bold fs-5" v-text="replies.length"></span>
+                    <span class="text-muted ms-1">Replies</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-around border-top pt-3">
+            <button class="action-btn" @click="showReplyModal()">
+                <i class="bi bi-reply"></i>
+                <span>Reply</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Replies Section -->
+<div v-if="!loading && !error && tweet" class="content-card">
+    <div class="card-body p-0">
+        <div class="border-bottom p-3" v-if="replies.length > 0">
+            <h5 class="mb-0 fw-bold text-primary">
+                <i class="bi bi-chat-dots me-2"></i>Replies
+            </h5>
+        </div>
+        
+        <!-- Replies -->
+        <div v-for="reply in replies" :key="reply.id" class="tweet-item m-3">
+            <div class="d-flex">
+                <div class="author-avatar">
+                    <span v-text="reply.author.name.charAt(0).toUpperCase()"></span>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <h6 class="mb-0 fw-bold">
+                                <a :href="`/user/${reply.author.id}/`" 
+                                   class="text-decoration-none text-dark author-link"
+                                   v-text="reply.author.name"></a>
+                            </h6>
+                            <small class="text-muted">
+                                @<a :href="`/user/${reply.author.id}/`" 
+                                     class="text-decoration-none text-muted author-link"><span v-text="reply.author.screen_name"></span></a>
+                            </small>
+                            <small class="text-muted">•</small>
+                            <small class="text-muted" v-text="formatDate(reply.created_at)"></small>
+                        </div>
+                        <button class="delete-btn" @click="deleteTweet(reply.id)" title="Delete reply">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    
+                    <p class="mb-3" v-text="reply.text"></p>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <button v-if="reply.reply_count > 0" 
+                                    class="btn btn-sm btn-outline-primary" 
+                                    @click.stop="toggleNestedReplies(reply)">
+                                <i class="bi" :class="reply.showReplies ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                                <span v-text="reply.reply_count"></span> replies
+                            </button>
+                            <small v-else class="text-muted">
+                                <i class="bi bi-chat me-1"></i>No replies
+                            </small>
+                        </div>
+                        <button class="reply-btn" @click="showReplyModal(reply)">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nested Replies Section -->
+            <div v-if="reply.showReplies" class="nested-replies-section mt-3 border-top pt-3">
+                <div v-if="reply.loadingReplies" class="text-center py-3">
+                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Loading replies...</span>
+                    </div>
+                    <small class="text-muted ms-2">Loading replies...</small>
+                </div>
+                
+                <div v-else-if="reply.replies && reply.replies.length > 0">
+                    <div v-for="nestedReply in reply.replies" :key="nestedReply.id" class="nested-reply-item d-flex mb-3 ps-4">
+                        <div class="author-avatar" style="width: 36px; height: 36px; font-size: 14px;">
+                            <span v-text="nestedReply.author.name.charAt(0).toUpperCase()"></span>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div class="d-flex align-items-center gap-2">
+                                    <small class="fw-bold">
+                                        <a :href="`/user/${nestedReply.author.id}/`" 
+                                           class="text-decoration-none text-dark author-link"
+                                           v-text="nestedReply.author.name"></a>
+                                    </small>
+                                    <small class="text-muted">
+                                        @<a :href="`/user/${nestedReply.author.id}/`" 
+                                             class="text-decoration-none text-muted author-link"><span v-text="nestedReply.author.screen_name"></span></a>
+                                    </small>
+                                    <small class="text-muted">•</small>
+                                    <small class="text-muted" v-text="formatDate(nestedReply.created_at)"></small>
+                                </div>
+                                <button class="delete-btn" @click.stop="deleteTweet(nestedReply.id)" title="Delete reply">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                            
+                            <p class="mb-2" v-text="nestedReply.text"></p>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <button v-if="nestedReply.reply_count > 0" 
+                                            class="btn btn-sm btn-outline-secondary" 
+                                            @click.stop="toggleDeeplyNestedReplies(nestedReply)">
+                                        <i class="bi" :class="nestedReply.showReplies ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                                        <span v-text="nestedReply.reply_count"></span> replies
+                                    </button>
+                                    <small v-else class="text-muted">
+                                        <i class="bi bi-chat me-1"></i>No replies
+                                    </small>
+                                </div>
+                                <button class="reply-btn btn-sm" @click.stop="showReplyModal(nestedReply)">
+                                    <i class="bi bi-reply me-1"></i>Reply
+                                </button>
+                            </div>
+                            
+                            <!-- Deeply Nested Replies (Level 3) -->
+                            <div v-if="nestedReply.showReplies" class="deeply-nested-replies mt-3 border-start border-primary ps-3">
+                                <div v-if="nestedReply.loadingReplies" class="text-center py-2">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="visually-hidden">Loading replies...</span>
+                                    </div>
+                                    <small class="text-muted ms-2">Loading replies...</small>
+                                </div>
+                                
+                                <div v-else-if="nestedReply.replies && nestedReply.replies.length > 0">
+                                    <div v-for="deepReply in nestedReply.replies" :key="deepReply.id" class="deep-reply-item d-flex mb-2">
+                                        <div class="author-avatar" style="width: 28px; height: 28px; font-size: 12px;">
+                                            <span v-text="deepReply.author.name.charAt(0).toUpperCase()"></span>
+                                        </div>
+                                        <div class="flex-grow-1 ms-2">
+                                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <small class="fw-bold">
+                                                        <a :href="`/user/${deepReply.author.id}/`" 
+                                                           class="text-decoration-none text-dark author-link"
+                                                           v-text="deepReply.author.name"></a>
+                                                    </small>
+                                                    <small class="text-muted">
+                                                        @<a :href="`/user/${deepReply.author.id}/`" 
+                                                             class="text-decoration-none text-muted author-link"><span v-text="deepReply.author.screen_name"></span></a>
+                                                    </small>
+                                                    <small class="text-muted">•</small>
+                                                    <small class="text-muted" v-text="formatDate(deepReply.created_at)"></small>
+                                                </div>
+                                                <button class="delete-btn" @click.stop="deleteTweet(deepReply.id)" title="Delete reply">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <p class="mb-1 small" v-text="deepReply.text"></p>
+                                            
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted" v-if="deepReply.reply_count > 0">
+                                                    <i class="bi bi-chat me-1"></i><span v-text="deepReply.reply_count"></span> more replies
+                                                </small>
+                                                <button class="reply-btn btn-sm" @click.stop="showReplyModal(deepReply)">
+                                                    <i class="bi bi-reply me-1"></i>Reply
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div v-else class="text-center py-2 text-muted">
+                                    <small>No replies found</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div v-else class="text-center py-3 text-muted">
+                    <small>No replies found</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Replies State -->
+        <div v-if="replies.length === 0 && !loading" class="empty-state">
+            <div class="text-center py-5">
+                <i class="bi bi-chat display-1 text-muted mb-3"></i>
+                <h4 class="text-muted">No replies yet</h4>
+                <p class="text-muted">Be the first to reply to this post!</p>
+                <button class="btn btn-primary" @click="showReplyModal()">
+                    <i class="bi bi-reply me-2"></i>Be the first to reply
+                </button>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div v-if="hasMore" class="text-center p-3">
+            <button class="btn btn-outline-primary" @click="loadMore" :disabled="loadingMore">
+                <span v-if="loadingMore">
+                    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                    Loading...
+                </span>
+                <span v-else>
+                    <i class="bi bi-arrow-down-circle me-2"></i>Load More Replies
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Reply Modal -->
+<div class="modal fade" :class="{ show: showReplyModalFlag }" :style="{ display: showReplyModalFlag ? 'block' : 'none' }" tabindex="-1" v-if="showReplyModalFlag">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white">
+                    <i class="bi bi-reply me-2"></i>Reply to 
+                    <span v-if="replyToTweet" v-text="replyToTweet.author.name"></span>
+                    <span v-else v-text="tweet.author.name"></span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @click="closeReplyModal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="original-tweet mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <strong v-if="replyToTweet" v-text="replyToTweet.author.name"></strong>
+                        <strong v-else v-text="tweet.author.name"></strong>
+                        <small class="text-muted ms-2">
+                            @<span v-if="replyToTweet" v-text="replyToTweet.author.screen_name"></span>
+                            <span v-else v-text="tweet.author.screen_name"></span>
+                        </small>
+                    </div>
+                    <p class="mb-0" v-if="replyToTweet" v-text="replyToTweet.text"></p>
+                    <p class="mb-0" v-else v-text="tweet.text"></p>
+                </div>
+                <form @submit.prevent="createReply">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Author</label>
+                        <div class="position-relative">
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="replyAuthorSearch"
+                                @input="searchReplyAuthors"
+                                placeholder="Search for author..."
+                                autocomplete="off">
+                            <div v-if="showReplyAuthorResults && replyAuthorResults.length > 0" class="search-results position-absolute w-100 mt-1">
+                                <div v-for="user in replyAuthorResults" :key="user.id" 
+                                    class="search-result" @click="selectReplyAuthor(user)">
+                                    <div>
+                                        <div class="fw-bold" v-text="user.name"></div>
+                                        <small class="text-muted">@<span v-text="user.screen_name"></span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="selectedReplyAuthor" class="selected-author mt-2">
+                            <i class="bi bi-check-circle me-1"></i>Selected: <span v-text="selectedReplyAuthor.name"></span> (@<span v-text="selectedReplyAuthor.screen_name"></span>)
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Reply Content</label>
+                        <textarea
+                            class="form-control"
+                            v-model="replyText"
+                            placeholder="Tweet your reply"
+                            maxlength="280"
+                            rows="4"></textarea>
+                        <div class="char-count">
+                            <span v-text="replyText.length"></span>/280
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary" @click="closeReplyModal">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" :disabled="!canSubmitReply">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" v-if="showReplyModalFlag" @click="closeReplyModal()"></div>
+{% endblock %}
+
+{% block vue_data %}
+loading: true,
+error: null,
+tweet: null,
+replies: [],
+hasMore: false,
+nextPage: null,
+loadingMore: false,
+showReplyModalFlag: false,
+replyToTweet: null,
+replyText: '',
+selectedReplyAuthor: null,
+replyAuthorSearch: '',
+replyAuthorResults: [],
+showReplyAuthorResults: false,
+tweetId: {{ tweet_id }}
+{% endblock %}
+
+{% block vue_computed %}
+canSubmitReply() {
+    return this.replyText.trim().length > 0 && 
+           this.replyText.length <= 280 && 
+           this.selectedReplyAuthor;
+}
+{% endblock %}
+
+{% block vue_methods %}
+async fetchTweetData(page = 1) {
+    try {
+        if (page === 1) {
+            this.loading = true;
+            this.error = null;
+        } else {
+            this.loadingMore = true;
+        }
+        
+        const response = await fetch(`/api/tweets/${this.tweetId}/?page=${page}`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch tweet data');
+        }
+        
+        const data = await response.json();
+        
+        if (page === 1) {
+            this.tweet = data.tweet;
+            this.replies = data.replies.map(reply => ({
+                ...reply,
+                showReplies: false,
+                loadingReplies: false,
+                replies: []
+            }));
+        } else {
+            this.replies.push(...data.replies.map(reply => ({
+                ...reply,
+                showReplies: false,
+                loadingReplies: false,
+                replies: []
+            })));
+        }
+        
+        this.hasMore = data.has_next;
+        this.nextPage = data.next_page;
+        
+    } catch (error) {
+        console.error('Error fetching tweet data:', error);
+        this.error = 'Failed to load tweet data. Please try again.';
+    } finally {
+        this.loading = false;
+        this.loadingMore = false;
+    }
+},
+
+loadMore() {
+    if (this.hasMore && !this.loadingMore) {
+        this.fetchTweetData(this.nextPage);
+    }
+},
+
+goBack() {
+    if (this.tweet && this.tweet.community) {
+        window.location.href = `/community/${this.tweet.community.id}/`;
+    } else {
+        window.location.href = '/';
+    }
+},
+
+formatDate(dateString) {
+    if (!dateString) {
+        return 'unknown';
+    }
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return 'unknown';
+    }
+    
+    const now = new Date();
+    const diff = now - date;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) {
+        return `${days}d`;
+    } else if (hours > 0) {
+        return `${hours}h`;
+    } else {
+        return 'now';
+    }
+},
+
+formatFullDate(dateString) {
+    if (!dateString) {
+        return 'Unknown date';
+    }
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return 'Unknown date';
+    }
+    
+    return date.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+},
+
+async searchReplyAuthors() {
+    if (this.replyAuthorSearch.length < 1) {
+        this.replyAuthorResults = [];
+        this.showReplyAuthorResults = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/users/search/?q=${encodeURIComponent(this.replyAuthorSearch)}&limit=20`);
+        const data = await response.json();
+        this.replyAuthorResults = data.users;
+        this.showReplyAuthorResults = true;
+    } catch (error) {
+        console.error('Error searching reply authors:', error);
+    }
+},
+
+selectReplyAuthor(user) {
+    this.selectedReplyAuthor = user;
+    this.replyAuthorSearch = user.name;
+    this.showReplyAuthorResults = false;
+},
+
+async createReply() {
+    if (!this.canSubmitReply) return;
+    
+    try {
+        const response = await fetch('/api/tweets/create/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                text: this.replyText,
+                author_id: this.selectedReplyAuthor.id,
+                reply_to_id: this.replyToTweet ? this.replyToTweet.id : this.tweet.id
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to create reply');
+        }
+        
+        const data = await response.json();
+        
+        // Create new reply with nested structure
+        const newReply = {
+            ...data.tweet,
+            showReplies: false,
+            loadingReplies: false,
+            replies: []
+        };
+        
+        if (this.replyToTweet) {
+            // This is a nested reply - find the parent and add to its replies
+            const parentReply = this.replies.find(r => r.id === this.replyToTweet.id);
+            if (parentReply) {
+                if (!parentReply.replies) {
+                    parentReply.replies = [];
+                }
+                parentReply.replies.unshift(newReply);
+                parentReply.reply_count++;
+                
+                // Auto-expand to show the new reply
+                if (!parentReply.showReplies) {
+                    parentReply.showReplies = true;
+                }
+            } else {
+                // Check if it's a deeply nested reply
+                for (let reply of this.replies) {
+                    if (reply.replies) {
+                        const nestedParent = reply.replies.find(nr => nr.id === this.replyToTweet.id);
+                        if (nestedParent) {
+                            if (!nestedParent.replies) {
+                                nestedParent.replies = [];
+                            }
+                            nestedParent.replies.unshift(newReply);
+                            nestedParent.reply_count++;
+                            
+                            // Auto-expand to show the new reply
+                            if (!nestedParent.showReplies) {
+                                nestedParent.showReplies = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            // This is a top-level reply to the main tweet
+            this.replies.unshift(newReply);
+        }
+        
+        this.closeReplyModal();
+        
+    } catch (error) {
+        console.error('Error creating reply:', error);
+        alert('Failed to create reply. Please try again.');
+    }
+},
+
+async deleteTweet(tweetId) {
+    const isMainTweet = tweetId === this.tweet.id;
+    const confirmMessage = isMainTweet 
+        ? 'Are you sure you want to delete this tweet? This will also delete all replies and redirect you back.'
+        : 'Are you sure you want to delete this reply? This will also delete all replies to this reply.';
+        
+    if (!confirm(confirmMessage)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/tweets/${tweetId}/delete/`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to delete tweet');
+        }
+        
+        if (isMainTweet) {
+            // Redirect back if main tweet was deleted
+            this.goBack();
+        } else {
+            // Remove reply from list
+            this.replies = this.replies.filter(r => r.id !== tweetId);
+        }
+        
+    } catch (error) {
+        console.error('Error deleting tweet:', error);
+        alert('Failed to delete tweet. Please try again.');
+    }
+},
+
+showReplyModal(replyToTweet = null) {
+    this.replyToTweet = replyToTweet;
+    this.showReplyModalFlag = true;
+    this.replyText = '';
+    this.selectedReplyAuthor = null;
+    this.replyAuthorSearch = '';
+    this.replyAuthorResults = [];
+    this.showReplyAuthorResults = false;
+},
+
+closeReplyModal() {
+    this.showReplyModalFlag = false;
+    this.replyToTweet = null;
+    this.replyText = '';
+    this.selectedReplyAuthor = null;
+    this.replyAuthorSearch = '';
+    this.replyAuthorResults = [];
+    this.showReplyAuthorResults = false;
+},
+
+async toggleNestedReplies(reply) {
+    if (reply.showReplies) {
+        // Hide nested replies
+        reply.showReplies = false;
+        return;
+    }
+    
+    // Show nested replies
+    reply.showReplies = true;
+    
+    // If nested replies not loaded yet, fetch them
+    if (reply.replies.length === 0 && reply.reply_count > 0) {
+        reply.loadingReplies = true;
+        
+        try {
+            const response = await fetch(`/api/tweets/${reply.id}/replies/`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch nested replies');
+            }
+            
+            const data = await response.json();
+            reply.replies = data.replies.map(nestedReply => ({
+                ...nestedReply,
+                showReplies: false,
+                loadingReplies: false,
+                replies: []
+            }));
+            
+        } catch (error) {
+            console.error('Error fetching nested replies:', error);
+            reply.showReplies = false;
+            alert('Failed to load nested replies. Please try again.');
+        } finally {
+            reply.loadingReplies = false;
+        }
+    }
+},
+
+async toggleDeeplyNestedReplies(nestedReply) {
+    if (nestedReply.showReplies) {
+        // Hide deeply nested replies
+        nestedReply.showReplies = false;
+        return;
+    }
+    
+    // Show deeply nested replies
+    nestedReply.showReplies = true;
+    
+    // If deeply nested replies not loaded yet, fetch them
+    if (nestedReply.replies.length === 0 && nestedReply.reply_count > 0) {
+        nestedReply.loadingReplies = true;
+        
+        try {
+            const response = await fetch(`/api/tweets/${nestedReply.id}/replies/`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch deeply nested replies');
+            }
+            
+            const data = await response.json();
+            nestedReply.replies = data.replies;
+            
+        } catch (error) {
+            console.error('Error fetching deeply nested replies:', error);
+            nestedReply.showReplies = false;
+            alert('Failed to load deeply nested replies. Please try again.');
+        } finally {
+            nestedReply.loadingReplies = false;
+        }
+    }
+}
+{% endblock %}
+
+{% block vue_mounted %}
+this.fetchTweetData();
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.position-relative')) {
+        this.showReplyAuthorResults = false;
+    }
+});
+{% endblock %}

@@ -1,0 +1,503 @@
+{% extends 'ui_vue/base.html' %}
+
+{% block title %}User Profile - Twitter Emulator{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="header-card">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center">
+            <button class="back-btn me-3" @click="goBack">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div>
+                <h1 class="h3 mb-1 fw-bold text-primary" v-if="user">
+                    <i class="bi bi-person me-2"></i><span v-text="user.name"></span>
+                </h1>
+                <h1 class="h3 mb-1 fw-bold text-primary" v-else>
+                    <i class="bi bi-person me-2"></i>User Profile
+                </h1>
+                <p class="text-muted mb-0">User profile and tweets</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div v-if="loading && !user" class="content-card">
+    <div class="card-body text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mb-0">Loading profile...</p>
+    </div>
+</div>
+
+<!-- Error State -->
+<div v-if="error" class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <span v-text="error"></span>
+</div>
+
+<!-- User Profile Info -->
+<div v-if="!loading && !error && user" class="content-card mb-4">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-start">
+            <div class="user-avatar me-4">
+                <span v-text="user.name.charAt(0).toUpperCase()"></span>
+            </div>
+            <div class="flex-grow-1">
+                <h2 class="mb-1 fw-bold" v-text="user.name"></h2>
+                <p class="text-muted mb-3">@<span v-text="user.screen_name"></span></p>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-auto">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-plus me-2 text-muted"></i>
+                            <small class="text-muted">Joined <span v-text="formatJoinDate(user.date_joined)"></span></small>
+                        </div>
+                    </div>
+                    <div class="col-auto" v-if="user.twitter_id">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-hash me-2 text-muted"></i>
+                            <small class="text-muted">ID: <span v-text="user.twitter_id"></span></small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row g-3">
+                    <div class="col-auto">
+                        <div class="stat-item">
+                            <span class="fw-bold" v-text="userStats.tweets_count"></span>
+                            <span class="text-muted ms-1">Tweets</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="stat-item">
+                            <span class="fw-bold" v-text="userStats.followers_count"></span>
+                            <span class="text-muted ms-1">Followers</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="stat-item">
+                            <span class="fw-bold" v-text="userStats.following_count"></span>
+                            <span class="text-muted ms-1">Following</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Tweets -->
+<div v-if="!loading && !error && user" class="content-card">
+    <div class="card-body p-0">
+        <div class="border-bottom p-3">
+            <h5 class="mb-0 fw-bold text-primary">
+                <i class="bi bi-chat-square-text me-2"></i>Tweets
+                <small class="text-muted ms-2">(Original posts only, no replies or community posts)</small>
+            </h5>
+        </div>
+        
+        <!-- Loading Tweets -->
+        <div v-if="loadingTweets && tweets.length === 0" class="text-center py-5">
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted mb-0">Loading tweets...</p>
+        </div>
+        
+        <!-- Tweets List -->
+        <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item m-3">
+            <div class="d-flex" @click="goToTweet(tweet.id)" style="cursor: pointer;">
+                <div class="author-avatar">
+                    <span v-text="tweet.author.name.charAt(0).toUpperCase()"></span>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <h6 class="mb-0 fw-bold" v-text="tweet.author.name"></h6>
+                            <small class="text-muted">@<span v-text="tweet.author.screen_name"></span></small>
+                            <small class="text-muted">•</small>
+                            <small class="text-muted" v-text="formatDate(tweet.created_at)"></small>
+                        </div>
+                        <button class="delete-btn" @click.stop="deleteTweet(tweet.id)" title="Delete tweet">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    
+                    <p class="mb-3" v-text="tweet.text"></p>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <small class="text-muted">
+                                <i class="bi bi-chat me-1"></i><span v-text="tweet.reply_count || 0"></span> replies
+                            </small>
+                        </div>
+                        <button class="reply-btn" @click.stop="showReplyModal(tweet)">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Tweets State -->
+        <div v-if="tweets.length === 0 && !loadingTweets && user" class="empty-state">
+            <div class="text-center py-5">
+                <i class="bi bi-chat-dots display-1 text-muted mb-3"></i>
+                <h4 class="text-muted">No tweets yet</h4>
+                <p class="text-muted">This user hasn't posted any original tweets yet.</p>
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div v-if="hasMore" class="text-center p-3">
+            <button class="btn btn-outline-primary" @click="loadMore" :disabled="loadingMore">
+                <span v-if="loadingMore">
+                    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                    Loading...
+                </span>
+                <span v-else>
+                    <i class="bi bi-arrow-down-circle me-2"></i>Load More
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Reply Modal -->
+<div class="modal fade" :class="{ show: showReplyModalFlag }" :style="{ display: showReplyModalFlag ? 'block' : 'none' }" tabindex="-1" v-if="showReplyModalFlag">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white">
+                    <i class="bi bi-reply me-2"></i>Reply to <span v-text="replyToTweet.author.name"></span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @click="closeReplyModal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="original-tweet mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <strong v-text="replyToTweet.author.name"></strong>
+                        <small class="text-muted ms-2">@<span v-text="replyToTweet.author.screen_name"></span></small>
+                    </div>
+                    <p class="mb-0" v-text="replyToTweet.text"></p>
+                </div>
+                <form @submit.prevent="createReply">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Author</label>
+                        <div class="position-relative">
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="replyAuthorSearch"
+                                @input="searchReplyAuthors"
+                                placeholder="Search for author..."
+                                autocomplete="off">
+                            <div v-if="showReplyAuthorResults && replyAuthorResults.length > 0" class="search-results position-absolute w-100 mt-1">
+                                <div v-for="user in replyAuthorResults" :key="user.id" 
+                                    class="search-result" @click="selectReplyAuthor(user)">
+                                    <div>
+                                        <div class="fw-bold" v-text="user.name"></div>
+                                        <small class="text-muted">@<span v-text="user.screen_name"></span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="selectedReplyAuthor" class="selected-author mt-2">
+                            <i class="bi bi-check-circle me-1"></i>Selected: <span v-text="selectedReplyAuthor.name"></span> (@<span v-text="selectedReplyAuthor.screen_name"></span>)
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Reply Content</label>
+                        <textarea
+                            class="form-control"
+                            v-model="replyText"
+                            placeholder="Tweet your reply"
+                            maxlength="280"
+                            rows="4"></textarea>
+                        <div class="char-count">
+                            <span v-text="replyText.length"></span>/280
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary" @click="closeReplyModal">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" :disabled="!canSubmitReply">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" v-if="showReplyModalFlag" @click="closeReplyModal()"></div>
+{% endblock %}
+
+{% block vue_data %}
+loading: true,
+loadingTweets: false,
+error: null,
+user: null,
+userStats: {
+    tweets_count: 0,
+    followers_count: 0,
+    following_count: 0
+},
+tweets: [],
+hasMore: false,
+nextPage: null,
+loadingMore: false,
+showReplyModalFlag: false,
+replyToTweet: null,
+replyText: '',
+selectedReplyAuthor: null,
+replyAuthorSearch: '',
+replyAuthorResults: [],
+showReplyAuthorResults: false,
+userId: {{ user_id }}
+{% endblock %}
+
+{% block vue_computed %}
+canSubmitReply() {
+    return this.replyText.trim().length > 0 && 
+           this.replyText.length <= 280 && 
+           this.selectedReplyAuthor;
+}
+{% endblock %}
+
+{% block vue_methods %}
+async fetchUserData(page = 1) {
+    try {
+        if (page === 1) {
+            this.loading = true;
+            this.loadingTweets = true;
+            this.error = null;
+        } else {
+            this.loadingMore = true;
+        }
+        
+        const response = await fetch(`/api/users/${this.userId}/?page=${page}`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+        }
+        
+        const data = await response.json();
+        
+        if (page === 1) {
+            this.user = data.user;
+            this.userStats = data.stats;
+            this.tweets = data.tweets;
+        } else {
+            this.tweets.push(...data.tweets);
+        }
+        
+        this.hasMore = data.has_next;
+        this.nextPage = data.next_page;
+        
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        this.error = 'Failed to load user data. Please try again.';
+    } finally {
+        this.loading = false;
+        this.loadingTweets = false;
+        this.loadingMore = false;
+    }
+},
+
+loadMore() {
+    if (this.hasMore && !this.loadingMore) {
+        this.fetchUserData(this.nextPage);
+    }
+},
+
+goBack() {
+    window.location.href = '/';
+},
+
+goToTweet(tweetId) {
+    window.location.href = `/tweet/${tweetId}/`;
+},
+
+formatDate(dateString) {
+    if (!dateString) {
+        return 'unknown';
+    }
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return 'unknown';
+    }
+    
+    const now = new Date();
+    const diff = now - date;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(hours / 24);
+    
+    if (days > 0) {
+        return `${days}d`;
+    } else if (hours > 0) {
+        return `${hours}h`;
+    } else {
+        return 'now';
+    }
+},
+
+formatJoinDate(dateString) {
+    if (!dateString) {
+        return 'Unknown';
+    }
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return 'Unknown';
+    }
+    
+    return date.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric'
+    });
+},
+
+async searchReplyAuthors() {
+    if (this.replyAuthorSearch.length < 1) {
+        this.replyAuthorResults = [];
+        this.showReplyAuthorResults = false;
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/users/search/?q=${encodeURIComponent(this.replyAuthorSearch)}&limit=20`);
+        const data = await response.json();
+        this.replyAuthorResults = data.users;
+        this.showReplyAuthorResults = true;
+    } catch (error) {
+        console.error('Error searching reply authors:', error);
+    }
+},
+
+selectReplyAuthor(user) {
+    this.selectedReplyAuthor = user;
+    this.replyAuthorSearch = user.name;
+    this.showReplyAuthorResults = false;
+},
+
+async createReply() {
+    if (!this.canSubmitReply) return;
+    
+    try {
+        const response = await fetch('/api/tweets/create/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                text: this.replyText,
+                author_id: this.selectedReplyAuthor.id,
+                reply_to_id: this.replyToTweet.id
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to create reply');
+        }
+        
+        // Update reply count
+        const tweet = this.tweets.find(t => t.id === this.replyToTweet.id);
+        if (tweet) {
+            tweet.reply_count++;
+        }
+        
+        this.closeReplyModal();
+        
+    } catch (error) {
+        console.error('Error creating reply:', error);
+        alert('Failed to create reply. Please try again.');
+    }
+},
+
+async deleteTweet(tweetId) {
+    if (!confirm('Are you sure you want to delete this tweet? This will also delete all replies.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/tweets/${tweetId}/delete/`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to delete tweet');
+        }
+        
+        this.tweets = this.tweets.filter(t => t.id !== tweetId);
+        this.userStats.tweets_count = Math.max(0, this.userStats.tweets_count - 1);
+        
+    } catch (error) {
+        console.error('Error deleting tweet:', error);
+        alert('Failed to delete tweet. Please try again.');
+    }
+},
+
+showReplyModal(tweet) {
+    this.replyToTweet = tweet;
+    this.showReplyModalFlag = true;
+    this.replyText = '';
+    this.selectedReplyAuthor = null;
+    this.replyAuthorSearch = '';
+    this.replyAuthorResults = [];
+    this.showReplyAuthorResults = false;
+},
+
+closeReplyModal() {
+    this.showReplyModalFlag = false;
+    this.replyToTweet = null;
+    this.replyText = '';
+    this.selectedReplyAuthor = null;
+    this.replyAuthorSearch = '';
+    this.replyAuthorResults = [];
+    this.showReplyAuthorResults = false;
+}
+{% endblock %}
+
+{% block vue_mounted %}
+this.fetchUserData();
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.position-relative')) {
+        this.showReplyAuthorResults = false;
+    }
+});
+{% endblock %}
+
+{% block css %}
+<style>
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    flex-shrink: 0;
+}
+
+.stat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+</style>
+{% endblock %}

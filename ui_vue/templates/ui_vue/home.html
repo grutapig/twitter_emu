@@ -1,0 +1,128 @@
+{% extends 'ui_vue/base.html' %}
+
+{% block title %}Communities - Twitter Emulator{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="header-card">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-1 fw-bold text-primary">
+                    <i class="bi bi-people-fill me-2"></i>Communities
+                </h1>
+                <p class="text-muted mb-0">Discover and join amazing communities</p>
+            </div>
+            <div class="badge fs-6" v-if="communities.length > 0">
+                <span v-text="communities.length"></span> Communities
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div v-if="loading" class="content-card">
+    <div class="card-body text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mb-0">Loading communities...</p>
+    </div>
+</div>
+
+<!-- Error State -->
+<div v-if="error" class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <span v-text="error"></span>
+</div>
+
+<!-- Communities List -->
+<div v-if="!loading && !error" class="content-card">
+    <div class="card-body p-0">
+        <!-- Debug info (remove in production) -->
+        <div v-if="communities.length > 0" class="alert alert-info m-3 mb-0">
+            <small><i class="bi bi-info-circle me-1"></i>Debug: <span v-text="communities.length"></span> communities loaded</small>
+        </div>
+        
+        <!-- Communities -->
+        <div v-for="community in communities" :key="community.id" 
+             class="community-item m-3" 
+             @click="goToCommunity(community.id)">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="me-3">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" 
+                                 style="width: 50px; height: 50px;">
+                                <i class="bi bi-people text-white fs-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-1 fw-bold" v-text="community.name"></h5>
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="badge bg-light text-dark">
+                                    <i class="bi bi-chat-dots me-1"></i><span v-text="community.tweet_count"></span> posts
+                                </span>
+                                <small class="text-muted">ID: <span v-text="community.twitter_id"></span></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <i class="bi bi-chevron-right text-primary fs-5"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div v-if="communities.length === 0" class="empty-state">
+            <div class="text-center py-5">
+                <i class="bi bi-people display-1 text-muted mb-3"></i>
+                <h4 class="text-muted">No communities found</h4>
+                <p class="text-muted">There are no communities available at the moment.</p>
+                <button class="btn btn-primary" @click="fetchCommunities">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Refresh
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block vue_data %}
+loading: true,
+error: null,
+communities: []
+{% endblock %}
+
+{% block vue_methods %}
+async fetchCommunities() {
+    try {
+        this.loading = true;
+        this.error = null;
+        
+        const response = await fetch('/api/communities/');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch communities');
+        }
+        
+        const data = await response.json();
+        console.log('Fetched communities:', data.communities);
+        this.communities = data.communities;
+    } catch (error) {
+        console.error('Error fetching communities:', error);
+        this.error = 'Failed to load communities. Please try again.';
+    } finally {
+        this.loading = false;
+    }
+},
+
+goToCommunity(communityId) {
+    window.location.href = `/community/${communityId}/`;
+}
+{% endblock %}
+
+{% block vue_mounted %}
+this.fetchCommunities();
+{% endblock %}
